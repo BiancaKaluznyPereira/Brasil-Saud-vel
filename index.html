@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brasil Saudável — Hábitos Alimentares</title>
+<meta name="description" content="Painel sobre os hábitos alimentares da população brasileira com base na POF 2017–2018 do IBGE." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #fff5fa;
+    --pink-bg: #ffe4f1;
+    --pink-soft: #ffd0e4;
+    --pink-mid: #ffb8d6;
+    --pink-strong: #ffa3d1;
+    --pink-ink: #b03a78;
+    --pink-ring: #ffd9eb;
+    --pink-shadow: rgba(255,163,209,.45);
+    --ink: #3b1d2e;
+    --ink-soft: #6b4a5c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(to bottom, var(--pink-bg), var(--cream));
+    text-align: center;
+    padding: 64px 24px 80px;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,.7);
+    color: var(--pink-ink);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  h1 {
+    font-family: 'Lobster', cursive;
+    color: var(--pink-ink);
+    font-size: clamp(48px, 9vw, 96px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  header p {
+    max-width: 640px;
+    margin: 24px auto 0;
+    font-size: 18px;
+    color: var(--ink-soft);
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+  section { margin-top: 80px; }
+  h2 {
+    font-family: 'Lobster', cursive;
+    color: var(--pink-ink);
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+  h2 .emoji { margin-right: 8px; }
+  p + p { margin-top: 12px; }
+  strong { color: var(--pink-ink); }
+
+  .grid { display: grid; gap: 20px; }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    border: 1px solid var(--pink-ring);
+    box-shadow: 0 10px 30px -15px var(--pink-shadow);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .card.hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -15px var(--pink-shadow);
+  }
+  .card h4 { color: var(--pink-ink); font-size: 16px; margin-bottom: 6px; }
+  .card .stat-num {
+    font-size: 36px; font-weight: 700; color: var(--pink-ink);
+    margin: 8px 0;
+  }
+  .card .emoji-big { font-size: 28px; }
+  .card .desc { font-size: 14px; color: var(--ink-soft); }
+
+  .chart-card {
+    background: #fff; border-radius: 24px; padding: 28px;
+    border: 1px solid var(--pink-ring);
+    box-shadow: 0 10px 30px -15px var(--pink-shadow);
+  }
+  .chart-card h3 { color: var(--pink-ink); margin-bottom: 20px; font-size: 18px; }
+
+  .bar-row { margin-bottom: 18px; }
+  .bar-row .bar-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+  .bar-track { height: 14px; background: var(--pink-bg); border-radius: 999px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 999px; }
+
+  .pie-wrap { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: center; }
+  .pie {
+    width: 180px; height: 180px; border-radius: 50%;
+    background: conic-gradient(
+      var(--pink-strong) 0 49.5%,
+      var(--pink-mid) 49.5% 81.6%,
+      var(--pink-soft) 81.6% 100%
+    );
+    box-shadow: inset 0 0 20px rgba(0,0,0,.05);
+  }
+  .legend { list-style: none; font-size: 14px; }
+  .legend li { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+  .legend .sw { width: 14px; height: 14px; border-radius: 4px; }
+
+  .bullets { list-style: none; }
+  .bullets li {
+    display: flex; gap: 12px;
+    background: #fff;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid var(--pink-ring);
+    margin-bottom: 12px;
+  }
+  .bullets li::before { content: "●"; color: var(--pink-strong); }
+
+  .conclusion {
+    background: linear-gradient(135deg, var(--pink-bg), #fff);
+    padding: 28px;
+    border-radius: 24px;
+    border: 1px solid var(--pink-ring);
+  }
+
+  footer {
+    background: rgba(255,255,255,.6);
+    border-top: 1px solid var(--pink-ring);
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  footer .lobster {
+    font-family: 'Lobster', cursive;
+    color: var(--pink-ink);
+    font-size: 28px;
+    display: block;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="badge">Ciência de Dados • 3DS-M • Bianca &amp; Isabella</span>
+  <h1>Brasil Saudável</h1>
+  <p>Um olhar sobre os hábitos alimentares da população brasileira, com base na <strong>Pesquisa de Orçamentos Familiares (POF 2017–2018) — IBGE</strong>.</p>
+</header>
+
+<main>
+
+  <section>
+    <h2><span class="emoji">🍽️</span>O problema</h2>
+    <p>A alimentação da população brasileira apresenta um <strong>padrão misto</strong>: ainda existem alimentos tradicionais e naturais, mas o consumo de <strong>ultraprocessados</strong> vem crescendo de forma significativa — especialmente entre jovens.</p>
+    <p>Esse cenário pode levar ao aumento da <strong>obesidade, diabetes</strong> e outras doenças crônicas, tornando-se um desafio de saúde pública.</p>
+  </section>
+
+  <section>
+    <h2><span class="emoji">🔍</span>Sobre a pesquisa</h2>
+    <div class="grid grid-3">
+      <div class="card"><h4>Tema</h4><p class="desc">Hábitos alimentares da população brasileira.</p></div>
+      <div class="card"><h4>Objetivo</h4><p class="desc">Entender a distribuição da alimentação e refletir sobre os impactos dos ultraprocessados.</p></div>
+      <div class="card"><h4>Fonte</h4><p class="desc">POF 2017–2018 — Pesquisa de Orçamentos Familiares (IBGE).</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="emoji">📊</span>Principais dados</h2>
+    <div class="grid grid-4">
+      <div class="card hover"><div class="emoji-big">🍎</div><div class="stat-num">49,5%</div><p class="desc">Calorias de alimentos in natura ou minimamente processados</p></div>
+      <div class="card hover"><div class="emoji-big">🍔</div><div class="stat-num">18,4%</div><p class="desc">Calorias vindas de alimentos ultraprocessados</p></div>
+      <div class="card hover"><div class="emoji-big">🍞</div><div class="stat-num">32,1%</div><p class="desc">Calorias de processados e outros alimentos</p></div>
+      <div class="card hover"><div class="emoji-big">🚨</div><div class="stat-num">27%</div><p class="desc">Ultraprocessados entre adolescentes e jovens</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="emoji">📈</span>Visualização dos dados</h2>
+    <div class="grid grid-2">
+      <div class="chart-card">
+        <h3>Distribuição calórica (%)</h3>
+        <div class="bar-row">
+          <div class="bar-label"><span>In natura / minimamente processados</span><strong>49,5%</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:49.5%;background:var(--pink-strong)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span>Processados e outros</span><strong>32,1%</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:32.1%;background:var(--pink-mid)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label"><span>Ultraprocessados</span><strong>18,4%</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:18.4%;background:var(--pink-soft)"></div></div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Composição da alimentação</h3>
+        <div class="pie-wrap">
+          <div class="pie" aria-label="Gráfico de pizza"></div>
+          <ul class="legend">
+            <li><span class="sw" style="background:var(--pink-strong)"></span>In natura — 49,5%</li>
+            <li><span class="sw" style="background:var(--pink-mid)"></span>Processados — 32,1%</li>
+            <li><span class="sw" style="background:var(--pink-soft)"></span>Ultraprocessados — 18,4%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="emoji">🧠</span>Análise dos dados</h2>
+    <ul class="bullets">
+      <li><span>O <strong>arroz e feijão</strong> ainda formam a base da alimentação brasileira, mas vêm perdendo espaço ano após ano.</span></li>
+      <li><span>O consumo de <strong>frutas, verduras e legumes</strong> continua abaixo do recomendado.</span></li>
+      <li><span>Os <strong>ultraprocessados</strong> avançam, principalmente entre adolescentes, chegando a <strong>27% das calorias</strong>.</span></li>
+      <li><span>O padrão é <strong>misto</strong>: tradição alimentar convivendo com hábitos modernos menos saudáveis.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="emoji">💡</span>Sugestões de solução</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>Comer mais comida de verdade</h4><p class="desc">Priorizar frutas, legumes, verduras, arroz, feijão e alimentos preparados em casa.</p></div>
+      <div class="card"><h4>Reduzir ultraprocessados</h4><p class="desc">Diminuir refrigerantes, salgadinhos, biscoitos recheados e congelados industrializados.</p></div>
+      <div class="card"><h4>Educação alimentar na escola</h4><p class="desc">Conversar sobre rótulos, marketing e escolhas conscientes no dia a dia.</p></div>
+      <div class="card"><h4>Rotina equilibrada</h4><p class="desc">Planejar refeições, beber água e evitar comer enquanto usa o celular.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="emoji">🌸</span>Conclusão</h2>
+    <div class="conclusion">
+      <p>A alimentação brasileira mantém uma base tradicional importante, mas o crescimento dos ultraprocessados — sobretudo entre os jovens — é um alerta para a saúde pública.</p>
+      <p>Transformar dados em uma página interativa nos ajudou a enxergar esse cenário com clareza e a pensar em escolhas mais saudáveis no nosso dia a dia.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="lobster">Brasil Saudável</span>
+  Bianca &amp; Isabella • 3DS-M • Ciência de Dados
+</footer>
+
+</body>
+</html>
